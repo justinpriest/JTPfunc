@@ -2,7 +2,7 @@
 % Please edit documentation in R/count_pct.R
 \name{count_pct}
 \alias{count_pct}
-\title{Summarize Proportions of Grouped Variables}
+\title{Summarize Proportions}
 \usage{
 count_pct(df)
 }
@@ -13,9 +13,11 @@ count_pct(df)
 
 }
 \description{
-Summarize Proportions of Grouped Variables
+This function summarizes the proportions of a variable based
+on the column of a grouped variables
 }
 \examples{
+library(dplyr)
 count_pct(iris \%>\%
           group_by(Species))
 }

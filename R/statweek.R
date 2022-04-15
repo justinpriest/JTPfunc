@@ -1,5 +1,6 @@
 
-#' Calculate the Statistical Week based on a date object
+#' @title Stat Week Calculation
+#' @description Calculate the Statistical Week based on a date object
 #'
 #' @param x The date column of interest to convert
 #'
@@ -9,6 +10,7 @@
 #'
 #' @examples
 #' dataframe %>% mutate(week = statweek(datecolumn))
+#' statweek(as.Date("2021-07-01")
 statweek <- function(x) {
   as.numeric(format(as.Date(x), "%U")) - as.numeric(format(as.Date(cut(x, "year")), "%U")) + 1
   # Function modified from:

@@ -1,6 +1,6 @@
 Package: JTPfunc
 Title: A Collection of Miscellaneous Functions
-Version: 0.0.11
+Version: 0.1.0
 Authors@R: 
     person("Justin", "Priest", , "justin.priest@alaska.gov", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5240-9428 "))
@@ -10,3 +10,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Suggests: 
+    ggplot2,
+    dplyr,
+    knitr,
+    rmarkdown

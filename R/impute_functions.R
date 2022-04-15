@@ -9,8 +9,8 @@
 
 
 
-#' Global Impute
-#' This creates a dataframe that imputes NA values across all available years and rivers.
+#' @title Global Impute
+#' @description This creates a dataframe that imputes NA values across all available years and rivers.
 #' This algorithm interpolates across rows and columns, following Blick.
 #' In essence, imputing across rows (years) and columns (streams) allows for an NA in
 #' a year/stream to be informed by typical counts and for that year AND stream

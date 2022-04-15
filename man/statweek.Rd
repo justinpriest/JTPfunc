@@ -2,7 +2,7 @@
 % Please edit documentation in R/statweek.R
 \name{statweek}
 \alias{statweek}
-\title{Calculate the Statistical Week based on a date object}
+\title{Stat Week Calculation}
 \usage{
 statweek(x)
 }
@@ -17,6 +17,7 @@ Calculate the Statistical Week based on a date object
 }
 \examples{
 dataframe \%>\% mutate(week = statweek(datecolumn))
+statweek(as.Date("2021-07-01")
 }
 \keyword{stat}
 \keyword{week}

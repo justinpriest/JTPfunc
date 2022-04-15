@@ -1,7 +1,7 @@
 
 
-#' Conditionally Add Rows
-#' Use this function if you need to add rows to a dataframe based on a certain criteria
+#' @title Conditionally Add Rows
+#' @description Use this function if you need to add rows to a dataframe based on a certain criteria
 #' For example, you might have rockfish data that had species "groups" which might
 #' need to be partitioned into extra rows for which add'l catch can be assigned.
 #' This function can specify which rows need to be duplicated ("criteria1"),
@@ -29,8 +29,9 @@
 #'                   repeatcount1 = 5, repeatcount2 = 10,
 #'                   criteria1 = 168, criteria2 = 140,
 #'                   sort1 = year, sort2 = species)
-#' This would create duplicate rows 5 times for species == 168 (red rockfishes),
-#'  and 10 duplicate rows for species == 140, then sort by columns year and species
+#' This would create duplicate rows 5 times for species == 168
+#' (unspecified demersal shelf rockfishes), and 10 duplicate rows for
+#' species == 140 (red rockfishes), then sort by columns year and species
 addrowconditional <- function(dataframename, criteriacolumn = columnname,
                               repeatcount1 = 1, repeatcount2 = 0,
                               criteria1 = filter1, criteria2 = NA,

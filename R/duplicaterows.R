@@ -1,7 +1,8 @@
 
 
-#' Unsummarize Data
-#' Use this function if you encounter already summarized data and
+#' @title Unsummarize Data
+#'
+#' @description Use this function if you encounter already summarized data and
 #'  need to split it into long format. For example, you might have
 #'  ASL data that has a row with Sex=M, Length=687, Specimen Count=3
 #' This means that there are 3 fish that are males all with the same

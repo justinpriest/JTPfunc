@@ -1,5 +1,5 @@
-#' Theme Crisp for ggplot2
-#'
+#' @title Theme Crisp for ggplot2
+#' @description Use a custom theme for crisp, clean plots with ggplot.
 #' @param base_size The base font size. Default = 12.
 #' @param base_family The base family font. Default = "Arial".
 #' @param rotate_x TRUE/FALSE whether x axis text should be rotated 45 degrees.

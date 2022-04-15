@@ -2,14 +2,7 @@
 % Please edit documentation in R/duplicaterows.R
 \name{duplicaterows}
 \alias{duplicaterows}
-\title{Unsummarize Data
-Use this function if you encounter already summarized data and
-need to split it into long format. For example, you might have
-ASL data that has a row with Sex=M, Length=687, Specimen Count=3
-This means that there are 3 fish that are males all with the same
-length of 687. Often though, we will want to run stats on our
-data which require it to NOT be summarized. This function takes
-summarized data and adds rows based on the count column}
+\title{Unsummarize Data}
 \usage{
 duplicaterows(
   dataframename,
@@ -30,7 +23,6 @@ Carefully use this because most often an NA is a true zero.}
 
 }
 \description{
-Unsummarize Data
 Use this function if you encounter already summarized data and
 need to split it into long format. For example, you might have
 ASL data that has a row with Sex=M, Length=687, Specimen Count=3

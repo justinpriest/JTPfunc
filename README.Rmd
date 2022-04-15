@@ -6,6 +6,8 @@ output: github_document
 
 ```{r, include = FALSE}
 library(JTPfunc)
+library(dplyr)
+library(tibble)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -14,14 +16,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# JTPfunc
+# Package JTPfunc
 
-<!-- badges: start -->
-<!-- badges: end -->
+
 
 A random collection of miscellaneous functions. 
 
-## Installation
+### Installation
 
 You can install the development version of JTPfunc from [GitHub](https://github.com/) with:
 
@@ -35,11 +36,120 @@ devtools::install_github("justinpriest/JTPfunc")
 There are many unique functions contained here, many with esoteric applications 
 to ADF&G data.  
 
+
+### Function `statweek()`
+
+To calculate the statistical week (Sunday-Saturday), use function `statweek()`
+on a date object to return the stat week: 
+```{r statweekdemo}
+statweek(as.Date("2021-07-01"))
+```
+
+
+### Function `theme_crisp()`
+
 One applicable extension is a ggplot theme called with `theme_crisp()`:
 ```{r exampleplot, fig.height = 3, fig.width = 7, warning = FALSE, message = FALSE}
 library(JTPfunc)
 library(ggplot2)
 ggplot(mtcars, aes(x = wt, y = mpg, color = wt)) + geom_point() + theme_crisp()
 ```
+
+
+### Function `duplicaterows()`
+
+For certain types of date (e.g., age summaries from the scale database)
+the data are exported in an already summarized manner. That is,
+all fish of the same date, species, sex, length, etc. are combined 
+into a single row.  
+If we wish to run statistics on these data, it is helpful to have each
+row be its own observation.  
+Our example data look like: 
+
+```{r cohodataimp, include = FALSE}
+coholengthdata <- tibble::tribble(
+                    ~Species, ~Sex, ~Length, ~Count,
+                      "Coho",  "M",    621L,     1L,
+                      "Coho",  "F",    497L,     2L,
+                      "Coho",  "M",    557L,     3L,
+                      "Coho",  "F",    563L,     1L
+                    )
+
+
+```
+
+```{r cohodatasumm}
+coholengthdata 
+```
+
+To add new rows to these data, we use function `duplicaterows()`, specifying 
+which row is the number of times to repeat. We can see that the row
+with the two 497 mm female coho is repeated twice while the row with 
+three 557 mm male coho is repeated 3 times:  
+```{r cohodatafxn}
+duplicaterows(dataframename = coholengthdata, 
+              duplicatecolname = "Count")
+
+```
+
+
+
+### Function `count_pct()`
+
+A common request is to determine the proportion of observations for each group 
+of data. Assuming that each row is an individual, we can calculate a quick 
+summary using `count_pct()` like so: 
+```{r countpctdemo}
+count_pct(iris %>%
+           group_by(Species))
+```
+
+
+### Function `addrowconditional()`
+For the following example, we'll use hypothetical rockfish catch data.  
+In some historical datasets, catches were not identified to a specific species 
+but rather to species aggregates. For example, species code 168 refers to 
+unspecified demersal shelf rockfishes while species code 140 is red rockfishes. 
+
+```{r loaddata, include = FALSE}
+rockfishcatch <- tibble::tribble(
+  ~Year, ~Location, ~Species, ~Catch,
+  2010L,   "Outer",     140L,    12L,
+  2010L,   "Inner",     140L,    33L,
+  2010L,  "Middle",     140L,    19L,
+  2010L,   "Outer",     168L,    33L,
+  2010L,   "Inner",     168L,    27L,
+  2010L,  "Middle",     168L,    24L,
+  2010L,   "Outer",     110L,    33L,
+  2010L,   "Inner",     110L,    27L,
+  2010L,  "Middle",     110L,    24L,
+  2011L,   "Outer",     140L,    12L,
+  2011L,   "Inner",     140L,    33L,
+  2011L,  "Middle",     140L,    19L,
+  2011L,   "Outer",     168L,    33L,
+  2011L,   "Inner",     168L,    27L,
+  2011L,  "Middle",     168L,    24L 
+)
+rockfishcatch <- rockfishcatch %>%
+  mutate(Location = as.factor(Location))
+
+```
+
+```{r showdata}
+head(rockfishcatch)
+```
+
+For these data, the total catch of the species aggregates (species 140 and 168) 
+was composed of several species. For this reason, these species may 
+require adding additional rows so that the total catch may be apportioned. 
+In our example, we repeat all rows of species 168 three times, and 
+repeat rows of species 140 two times, then sort by year and species:
+```{r addrowconddemo}
+addrowconditional(rockfishcatch, criteriacolumn = Species,
+                   repeatcount1 = 3, repeatcount2 = 2,
+                   criteria1 = 168, criteria2 = 140,
+                   sort1 = Year, sort2 = Species)
+```
+
 
 

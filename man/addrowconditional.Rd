@@ -2,15 +2,7 @@
 % Please edit documentation in R/addrowconditional.R
 \name{addrowconditional}
 \alias{addrowconditional}
-\title{Conditionally Add Rows
-Use this function if you need to add rows to a dataframe based on a certain criteria
-For example, you might have rockfish data that had species "groups" which might
-need to be partitioned into extra rows for which add'l catch can be assigned.
-This function can specify which rows need to be duplicated ("criteria1"),
-how many times to repeat that row ("repeatcount1"),
-and then sort ("sort1") to make a more useful view.
-Additionally, these are extended by secondary criteria ("criteria2"),
-repeat counts ("repeatcount2"), and sorting ("sort2").}
+\title{Conditionally Add Rows}
 \usage{
 addrowconditional(
   dataframename,
@@ -44,7 +36,6 @@ addrowconditional(
 
 }
 \description{
-Conditionally Add Rows
 Use this function if you need to add rows to a dataframe based on a certain criteria
 For example, you might have rockfish data that had species "groups" which might
 need to be partitioned into extra rows for which add'l catch can be assigned.
@@ -59,6 +50,7 @@ addrowconditional(df, criteriacolumn = species,
                   repeatcount1 = 5, repeatcount2 = 10,
                   criteria1 = 168, criteria2 = 140,
                   sort1 = year, sort2 = species)
-This would create duplicate rows 5 times for species == 168 (red rockfishes),
- and 10 duplicate rows for species == 140, then sort by columns year and species
+This would create duplicate rows 5 times for species == 168
+(unspecified demersal shelf rockfishes), and 10 duplicate rows for
+species == 140 (red rockfishes), then sort by columns year and species
 }

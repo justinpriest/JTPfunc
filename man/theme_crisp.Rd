@@ -26,7 +26,7 @@ Default = FALSE.}
 
 }
 \description{
-Theme Crisp for ggplot2
+Use a custom theme for crisp, clean plots with ggplot.
 }
 \examples{
 library(ggplot2)
