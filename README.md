@@ -30,6 +30,10 @@ statweek(as.Date("2021-07-01"))
 #> [1] 27
 ```
 
+<hr>
+
+<br>
+
 ### Function `theme_crisp()`
 
 One applicable extension is a ggplot theme called with `theme_crisp()`:
@@ -41,6 +45,10 @@ ggplot(mtcars, aes(x = wt, y = mpg, color = wt)) + geom_point() + theme_crisp()
 ```
 
 <img src="man/figures/README-exampleplot-1.png" width="100%" />
+
+<hr>
+
+<br>
 
 ### Function `duplicaterows()`
 
@@ -83,6 +91,10 @@ duplicaterows(dataframename = coholengthdata,
 #> 7 Coho    F        563
 ```
 
+<hr>
+
+<br>
+
 ### Function `count_pct()`
 
 A common request is to determine the proportion of observations for each
@@ -99,6 +111,10 @@ count_pct(iris %>%
 #> 2 versicolor    50  33.3
 #> 3 virginica     50  33.3
 ```
+
+<hr>
+
+<br>
 
 ### Function `addrowconditional()`
 

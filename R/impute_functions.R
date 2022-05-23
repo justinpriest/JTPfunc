@@ -39,7 +39,7 @@ impute_global <- function(dfname, Year_column="year",
   # Step 1: Set up dataframe to impute
   .test <- dfname %>% rename(year = Year_column,
                              stream_name = StreamName_column,
-                             total_count = Count_column)
+                             total_count = count_column)
   .test <- .test %>% dplyr::select(year, stream_name, total_count)
   .test <- .test %>% mutate(imputed = is.na(total_count))
 
@@ -106,10 +106,10 @@ impute_global <- function(dfname, Year_column="year",
 impute_cohodefault <- function(dfname,
                                Year_column="year",
                                StreamName_column="stream_name",
-                               Count_column = "total_count",
+                               count_column = "total_count",
                                outputname = "defaultcohoimputed"){
   # Step 1: Set up dataframe to impute
-  .test <- dfname %>% rename(year = Year_column, stream_name = StreamName_column, total_count = Count_column)
+  .test <- dfname %>% rename(year = Year_column, stream_name = StreamName_column, total_count = count_column)
   .test <- .test %>% dplyr::select(year, stream_name, total_count)
   .test <- .test %>% mutate(imputed = is.na(total_count))
 
@@ -179,12 +179,12 @@ impute_cohodefault <- function(dfname,
 impute_local <- function(dfname,
                          Year_column="year",
                          StreamName_column="stream_name",
-                         Count_column = "total_count"){
+                         count_column = "total_count"){
 
   # Step 1: Set up dataframe to impute
   .test <- dfname %>% rename(year = Year_column,
                              stream_name = StreamName_column,
-                             total_count = Count_column)
+                             total_count = count_column)
   .test <- .test %>% dplyr::select(year, stream_name, total_count)
   .test <- .test %>% mutate(imputed = is.na(total_count))
 
@@ -240,10 +240,10 @@ impute_local <- function(dfname,
 impute_local_improved <- function(dfname,
                                   Year_column="year",
                                   StreamName_column="stream_name",
-                                  Count_column = "total_count"){
+                                  count_column = "total_count"){
 
   # Step 1: Set up dataframe to impute
-  .test <- dfname %>% rename(year = Year_column, stream_name = StreamName_column, total_count = Count_column)
+  .test <- dfname %>% rename(year = Year_column, stream_name = StreamName_column, total_count = count_column)
   .test <- .test %>% dplyr::select(year, stream_name, total_count)
   .test <- .test %>% mutate(imputed = is.na(total_count))
 

@@ -21,7 +21,7 @@ impute_cohodefault(
   dfname,
   Year_column = "year",
   StreamName_column = "stream_name",
-  Count_column = "total_count",
+  count_column = "total_count",
   outputname = "defaultcohoimputed"
 )
 }
@@ -32,9 +32,9 @@ impute_cohodefault(
 
 \item{StreamName_column}{The name of the column with the stream name (i.e., impute criteria 2)}
 
-\item{outputname}{Vestigial.}
-
 \item{count_column}{The name of the column with the counts to impute.}
+
+\item{outputname}{Vestigial.}
 }
 \value{
 

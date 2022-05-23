@@ -46,6 +46,9 @@ statweek(as.Date("2021-07-01"))
 ```
 
 
+<hr>
+<br>
+
 ### Function `theme_crisp()`
 
 One applicable extension is a ggplot theme called with `theme_crisp()`:
@@ -55,6 +58,9 @@ library(ggplot2)
 ggplot(mtcars, aes(x = wt, y = mpg, color = wt)) + geom_point() + theme_crisp()
 ```
 
+
+<hr>
+<br>
 
 ### Function `duplicaterows()`
 
@@ -92,7 +98,8 @@ duplicaterows(dataframename = coholengthdata,
 
 ```
 
-
+<hr>
+<br>
 
 ### Function `count_pct()`
 
@@ -104,6 +111,9 @@ count_pct(iris %>%
            group_by(Species))
 ```
 
+
+<hr>
+<br>
 
 ### Function `addrowconditional()`
 For the following example, we'll use hypothetical rockfish catch data.  

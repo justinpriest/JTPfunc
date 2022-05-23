@@ -15,7 +15,7 @@ impute_local_improved(
   dfname,
   Year_column = "year",
   StreamName_column = "stream_name",
-  Count_column = "total_count"
+  count_column = "total_count"
 )
 }
 \arguments{
