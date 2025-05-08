@@ -162,4 +162,64 @@ addrowconditional(rockfishcatch, criteriacolumn = Species,
 ```
 
 
+<hr>
+<br>
 
+### Function `impute_global()`
+Dealing with missing data requires imputing the missing values based on a 
+relationship between known variables. The `impute_global` function will create 
+an imputed value for the use case of multiple rivers, multiple years, and a 
+single (escapement) count. Many biologists use an Excel addin ("Missfill") to 
+impute across the river (columns) / year (rows) matrix. This function works on 
+"long" format data such as downloaded from OceanAK and imputes across all 
+available years/rivers. This uses an iterative approach, following Blick. 
+This function can be easily modified to auto-create a named dataframe 
+(argument "outputname"). Make sure that all NAs are present (a missing row is 
+NOT same as a row with an NA). 
+
+
+For example, consider this dataset of 3 streams and 4 years, containing 2 NAs. 
+```{r imputedemodata, include = FALSE}
+streamcounts <- tibble::tribble(
+  ~Year,              ~Stream, ~Count,
+  2022L,      "Berners River",     NA,
+  2023L,      "Berners River",   200L,
+  2024L,      "Berners River",   150L,
+  2025L,      "Berners River",   300L,
+  2022L,      "Niukluk River",  1000L,
+  2023L,      "Niukluk River",   900L,
+  2024L,      "Niukluk River",   800L,
+  2025L,      "Niukluk River",  1200L,
+  2022L, "Resurrection Creek",   150L,
+  2023L, "Resurrection Creek",     NA,
+  2024L, "Resurrection Creek",   140L,
+  2025L, "Resurrection Creek",   300L
+  )
+```
+
+```{r imputedemodata_show}
+streamcounts 
+```
+
+To impute the missing values, we run `impute_global()`:
+
+```{r imputedemofunc}
+impute_global(streamcounts, Year_column = "Year", StreamName_column = "Stream",
+              count_column = "Count")
+```
+
+
+
+There are actually several impute functions in this package, each imputing for 
+specific use cases:  
+`impute_global()`: Impute all available data and years.  
+`impute_local()`: 10-yr Localized Imputation. This takes a dataframe with NA values 
+and imputes missing data. This algorithm uses "local" imputation: only 5 years 
+before and after impute a missing value, i.e., only using the preceding 5 years 
+and following 5 years.  
+`impute_local_improved()`: 10-yr Localized Imputation, improved. This algorithm 
+uses the `impute_local()` implementation, however it adds a rule for the first 10 
+years to use the 10 next years (10-year minimum).  
+`impute_cohodefault()`: Specific to the SEAK Coho Research program, this imputes 
+1987-2000 first, then each year is imputed after that, building on itself (i.e., 
+imputed values from 2001 inform the imputation in 2002).  
