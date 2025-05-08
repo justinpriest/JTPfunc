@@ -17,7 +17,7 @@ devtools::install_github("justinpriest/JTPfunc")
 
 ## Example Functions
 
-There are many unique functions contained here, many with esoteric
+There are several unique functions contained here, some with esoteric
 applications to ADF&G data.
 
 ### Function `statweek()`
@@ -62,7 +62,7 @@ Our example data look like:
 
 ``` r
 coholengthdata 
-#> # A tibble: 4 x 4
+#> # A tibble: 4 × 4
 #>   Species Sex   Length Count
 #>   <chr>   <chr>  <int> <int>
 #> 1 Coho    M        621     1
@@ -79,7 +79,7 @@ with three 557 mm male coho is repeated 3 times:
 ``` r
 duplicaterows(dataframename = coholengthdata, 
               duplicatecolname = "Count")
-#> # A tibble: 7 x 3
+#> # A tibble: 7 × 3
 #>   Species Sex   Length
 #>   <chr>   <chr>  <int>
 #> 1 Coho    M        621
@@ -104,7 +104,7 @@ a quick summary using `count_pct()` like so:
 ``` r
 count_pct(iris %>%
            group_by(Species))
-#> # A tibble: 3 x 3
+#> # A tibble: 3 × 3
 #>   Species        n n_pct
 #>   <fct>      <int> <dbl>
 #> 1 setosa        50  33.3
@@ -126,7 +126,7 @@ is red rockfishes.
 
 ``` r
 head(rockfishcatch)
-#> # A tibble: 6 x 4
+#> # A tibble: 6 × 4
 #>    Year Location Species Catch
 #>   <int> <fct>      <int> <int>
 #> 1  2010 Outer        140    12
@@ -149,9 +149,9 @@ addrowconditional(rockfishcatch, criteriacolumn = Species,
                    repeatcount1 = 3, repeatcount2 = 2,
                    criteria1 = 168, criteria2 = 140,
                    sort1 = Year, sort2 = Species)
-#> Joining, by = c("Year", "Location", "Species", "Catch")
-#> Joining, by = c("Year", "Location", "Species", "Catch")
-#> # A tibble: 33 x 4
+#> Joining with `by = join_by(Year, Location, Species, Catch)`
+#> Joining with `by = join_by(Year, Location, Species, Catch)`
+#> # A tibble: 33 × 4
 #>     Year Location Species Catch
 #>    <int> <fct>      <int> <int>
 #>  1  2010 Outer        110    33
@@ -164,5 +164,83 @@ addrowconditional(rockfishcatch, criteriacolumn = Species,
 #>  8  2010 Inner        140    33
 #>  9  2010 Middle       140    19
 #> 10  2010 Outer        168    33
-#> # ... with 23 more rows
+#> # ℹ 23 more rows
 ```
+
+<hr>
+
+<br>
+
+### Function `impute_global()`
+
+Dealing with missing data requires imputing the missing values based on
+a relationship between known variables. The `impute_global` function
+will create an imputed value for the use case of multiple rivers,
+multiple years, and a single (escapement) count. Many biologists use an
+Excel addin (“Missfill”) to impute across the river (columns) / year
+(rows) matrix. This function works on “long” format data such as
+downloaded from OceanAK and imputes across all available years/rivers.
+This uses an iterative approach, following Blick. This function can be
+easily modified to auto-create a named dataframe (argument
+“outputname”). Make sure that all NAs are present (a missing row is NOT
+same as a row with an NA).
+
+For example, consider this dataset of 3 streams and 4 years, containing
+2 NAs.
+
+``` r
+streamcounts 
+#> # A tibble: 12 × 3
+#>     Year Stream             Count
+#>    <int> <chr>              <int>
+#>  1  2022 Berners River         NA
+#>  2  2023 Berners River        200
+#>  3  2024 Berners River        150
+#>  4  2025 Berners River        300
+#>  5  2022 Niukluk River       1000
+#>  6  2023 Niukluk River        900
+#>  7  2024 Niukluk River        800
+#>  8  2025 Niukluk River       1200
+#>  9  2022 Resurrection Creek   150
+#> 10  2023 Resurrection Creek    NA
+#> 11  2024 Resurrection Creek   140
+#> 12  2025 Resurrection Creek   300
+```
+
+To impute the missing values, we run `impute_global()`:
+
+``` r
+impute_global(streamcounts, Year_column = "Year", StreamName_column = "Stream",
+              count_column = "Count")
+#> # A tibble: 12 × 4
+#>     year stream_name        total_count imputed
+#>    <int> <chr>                    <dbl> <lgl>  
+#>  1  2022 Berners River             213. TRUE   
+#>  2  2023 Berners River             200  FALSE  
+#>  3  2024 Berners River             150  FALSE  
+#>  4  2025 Berners River             300  FALSE  
+#>  5  2022 Niukluk River            1000  FALSE  
+#>  6  2023 Niukluk River             900  FALSE  
+#>  7  2024 Niukluk River             800  FALSE  
+#>  8  2025 Niukluk River            1200  FALSE  
+#>  9  2022 Resurrection Creek        150  FALSE  
+#> 10  2023 Resurrection Creek        177. TRUE   
+#> 11  2024 Resurrection Creek        140  FALSE  
+#> 12  2025 Resurrection Creek        300  FALSE
+```
+
+There are actually several impute functions in this package, each
+imputing for specific use cases:  
+`impute_global()`: Impute all available data and years.  
+`impute_local()`: 10-yr Localized Imputation. This takes a dataframe
+with NA values and imputes missing data. This algorithm uses “local”
+imputation: only 5 years before and after impute a missing value, i.e.,
+only using the preceding 5 years and following 5 years.  
+`impute_local_improved()`: 10-yr Localized Imputation, improved. This
+algorithm uses the `impute_local()` implementation, however it adds a
+rule for the first 10 years to use the 10 next years (10-year
+minimum).  
+`impute_cohodefault()`: Specific to the SEAK Coho Research program, this
+imputes 1987-2000 first, then each year is imputed after that, building
+on itself (i.e., imputed values from 2001 inform the imputation in
+2002).
